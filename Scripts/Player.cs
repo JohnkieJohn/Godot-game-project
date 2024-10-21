@@ -9,7 +9,7 @@ public partial class Player : CharacterBody2D
 	private PackedScene bullet = (PackedScene)ResourceLoader.Load("res://Scenes/player_bullet.tscn");
 	private Sprite2D playerSprite;
 
-	// Booléens pour savoir quel type de tir est actif
+	// type de tirs
 	private bool isShootingAuto = false;
 	private bool isShootingConcentrate = false;
 
@@ -25,36 +25,26 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{
-		// // Récupérer la taille actuelle de la fenêtre
-		// Vector2 viewportSize = GetViewport().GetVisibleRect().Size;
-
-		// // Calculer la position du bas au centre
-		// float x = viewportSize.X / 2; // Centre en X
-		// float y = viewportSize.Y - 50; // Assez près du bas, ajuste la valeur selon la hauteur du Player
-
-		// // Appliquer la nouvelle position au joueur
-		// Position = new Vector2(x, y);
-
-		// Récupère le Timer
+		// timers
 		shootSpeedTimerAuto = GetNode<Timer>("Shootspeedauto");
 		shootSpeedTimerAuto.Timeout += OnShootSpeedAutoTimeOut;
 
 		shootSpeedTimerConcentrate = GetNode<Timer>("Shootspeedconcentrate");
 		shootSpeedTimerConcentrate.Timeout += OnShootSpeedConcentrateTimeOut;
 
+		// bullet positions
 		spawnPos1 = GetNode<Marker2D>("Spawnbulletpos1");
 		spawnPos2 = GetNode<Marker2D>("Spawnbulletpos2");
 		spawnPos3 = GetNode<Marker2D>("Spawnbulletpos3");
 
 		playerSprite = GetNode<Sprite2D>("Sprite2D");
 
-		// Récupérer le AnimationPlayer
+		// animation player
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animationPlayer.AnimationFinished += OnAnimationFinishedFinalLoop;
 
 		muzzleflashPlayer = GetNode<AnimationPlayer>("MuzzleflashPlayer");
 
-		// Par défaut, jouer l'animation "neutral" en boucle
 		animationPlayer.Play("neutral");
 	}
 
@@ -62,64 +52,63 @@ public partial class Player : CharacterBody2D
 	{
 		Vector2 movement = GetMovementInput();
 
-		// Appliquer le mouvement en tenant compte du delta pour une vitesse constante
 		Vector2 newPosition = this.Position + movement * speed * (float)delta;
 
-		// Obtenir la taille du Viewport (la fenêtre de jeu)
+		// taille de la fenêtre du jeu
 		Rect2 viewportRect = GetViewportRect();
 
-		// Taille du sprite du joueur pour les limites
+		// taille sprite du joueur
 		Vector2 playerSize = playerSprite.GetTexture().GetSize() * Scale;
 
-		// Clamper la position pour empêcher de dépasser les bords avec une marge de 30
+		// clamper la position au niveau des bords
 		newPosition.X = Mathf.Clamp(newPosition.X, 0 + (playerSize.X - 30) / 2, viewportRect.Size.X - (playerSize.X - 30) / 2);
 		newPosition.Y = Mathf.Clamp(newPosition.Y, 0 + (playerSize.Y - 30) / 2, viewportRect.Size.Y - (playerSize.Y - 30) / 2);
 
-		// Appliquer la nouvelle position clampée
+		// appliquer position clampée
 		this.Position = newPosition;
 		MoveAndSlide();
 
-		// Tir auto
+		// tir auto
 		if (Input.IsActionJustPressed("shoot_auto"))
 		{
-			if (!isShootingConcentrate)  // Si tir concentré n'est pas actif
+			if (!isShootingConcentrate)
 			{
-				isShootingAuto = true;  // Activer le tir auto
+				isShootingAuto = true;
 				shootSpeedTimerAuto.Start();
 			}
 		}
 		if (Input.IsActionPressed("shoot_auto"))
 		{
-			if (!isShootingConcentrate && !isShootingAuto)  // Si tir concentré n'est pas actif
+			if (!isShootingConcentrate && !isShootingAuto)
 			{
 				ShootAuto();
-				isShootingAuto = true;  // Activer le tir auto
+				isShootingAuto = true;
 				shootSpeedTimerAuto.Start();
 			}
 		}
 		if (Input.IsActionJustReleased("shoot_auto"))
 		{
 			ShootAuto();
-			isShootingAuto = false;  // Désactiver le tir auto
+			isShootingAuto = false;
 			shootSpeedTimerAuto.Stop();
 		}
 
-		// Tir concentré
+		// tir concentré
 		if (Input.IsActionJustPressed("shoot_concentrate"))
 		{
-			if (isShootingAuto)  // Si le tir auto est actif
+			if (isShootingAuto)
 			{
-				// Arrêter le tir auto si le tir concentré est pressé
+				// arrêter le tir auto si le tir concentré est pressé
 				isShootingAuto = false;
 				shootSpeedTimerAuto.Stop();
 			}
 
-			isShootingConcentrate = true;  // Activer le tir concentré
+			isShootingConcentrate = true;
 			shootSpeedTimerConcentrate.Start();
 		}
 		if (Input.IsActionJustReleased("shoot_concentrate"))
 		{
-			isShootingConcentrate = false;  // Désactiver le tir concentré
+			isShootingConcentrate = false;
 			shootSpeedTimerConcentrate.Stop();
 			speed = 300;
 		}
@@ -140,7 +129,7 @@ public partial class Player : CharacterBody2D
 			}
 		}
 
-		// Si tu veux obtenir la collision après le mouvement
+		// gère la collision avec les ennemis
 		var collision = GetLastSlideCollision();
 		if (collision != null)
 		{
@@ -174,7 +163,6 @@ public partial class Player : CharacterBody2D
 
 	private void ShootAuto()
 	{
-		// Instancier la scène (le nœud racine de cette scène)
 		Node instance1 = bullet.Instantiate();
 		Node instance2 = bullet.Instantiate();
 		Node instance3 = bullet.Instantiate();
@@ -188,7 +176,6 @@ public partial class Player : CharacterBody2D
 		Sprite2D bulletSprite2 = ((PlayerBullet)instance2).GetNode<Sprite2D>("Sprite2D");
 		bulletSprite2.Rotation = new Vector2(0.18f, -1).Angle() + Mathf.Pi / 2;
 
-		// Ajouter l'instance de la scène à la racine de la scène actuelle (parent du joueur)
 		GetTree().Root.AddChild(instance1);
 		GetTree().Root.AddChild(instance2);
 		GetTree().Root.AddChild(instance3);
@@ -204,14 +191,12 @@ public partial class Player : CharacterBody2D
 
 	private void ShootConcentrate()
 	{
-		// Instancier la scène (le nœud racine de cette scène)
 		Node instance = bullet.Instantiate();
 
 		((PlayerBullet)instance).Initialize(spawnPos3.GlobalPosition, new Vector2(0, -1), 80);
 		Sprite2D bulletSprite = ((PlayerBullet)instance).GetNode<Sprite2D>("Sprite2D");
 		bulletSprite.Scale = new Vector2(2.5f, 2.5f);
 
-		// Ajouter l'instance de la scène à la racine de la scène actuelle (parent du joueur)
 		GetTree().Root.AddChild(instance);
 
 		if (speed != 200)
@@ -233,6 +218,7 @@ public partial class Player : CharacterBody2D
 		ShootConcentrate();
 	}
 
+	// Gestion de l'animation de mouvement du joueur
 	private void AnimationToPlay(Vector2 inputMovement)
 	{
 		if (Input.IsActionPressed("ui_right"))
@@ -364,7 +350,6 @@ public partial class Player : CharacterBody2D
 				break;
 
 			default:
-				// Optionnel : gérer des cas non prévus
 				break;
 		}
 	}

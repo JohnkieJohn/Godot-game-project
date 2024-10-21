@@ -28,10 +28,6 @@ public partial class Main : Node2D
 		AddChild(filterRect);
 		filterRect.MoveToFront();
 
-		// Player instance = (Player)player.Instantiate();
-		// AddChild(instance);
-		// instance.MoveToFront();
-
 		background = GetNode<ParallaxBackground>("ParallaxBackground");
 		backgroundOver = GetNode<ParallaxBackground>("ParallaxBackground2");
 	}
@@ -48,9 +44,9 @@ public partial class Main : Node2D
 		Random rand = new Random();
 		Node instance = enemy1.Instantiate();
 
-		// X entre 0 et 1150
+		// X entre 100 et 300
 		float x = rand.Next(100, 300);
-		// Y entre 0 et 250
+		// Y entre -50 et -10
 		float y = rand.Next(-50, -10);
 		
 		((Path2d1Enemy1)instance).Initialize(new Godot.Vector2(x, y));
@@ -63,9 +59,9 @@ public partial class Main : Node2D
 		Random rand = new Random();
 		Node instance = enemy2.Instantiate();
 
-		 // X entre 0 et 1150
+		 // X entre 40 et 440
 		float x = rand.Next(40, 440);
-		// Y entre 0 et 250
+		// Y entre -100 et -10
 		float y = rand.Next(-100, -10);
 		
 		((Enemy2)instance).Initialize(new Godot.Vector2(x, y));

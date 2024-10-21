@@ -3,9 +3,9 @@ using System;
 
 public partial class Enemy1Bullet : Area2D
 {
-	private float speed = 150;  // Vitesse du projectile
+	private float speed = 150;
 	private Vector2 direction;
-	private float rotationSpeed = 20; // Vitesse de rotation en radians par seconde
+	private float rotationSpeed = 20;
 	private Enemy1 shooter;
 
 	// Called when the node enters the scene tree for the first time.
@@ -17,15 +17,13 @@ public partial class Enemy1Bullet : Area2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		// Déplacer le projectile dans la direction spécifiée
 		Vector2 movement = this.Position += direction * speed * (float)delta;
 
-		// Faire tourner le sprite
+		// faire tourner le sprite
 		Rotate(rotationSpeed * (float)delta);
 
 		if (GameManager.Instance.IsOutOfScreen(GetViewportRect(), Position.Y, Position.X))
 		{
-			// Supprimer le projectile
 			QueueFree();
 			GD.Print("projectile ennemi supprimé");
 		}
@@ -34,7 +32,7 @@ public partial class Enemy1Bullet : Area2D
 	public void Initialize(Vector2 startPosition, Vector2 shootDirection, Enemy1 enemy1)
 	{
 		this.Position = startPosition;
-		this.direction = shootDirection.Normalized();  // Normaliser la direction pour éviter d'influencer la vitesse
+		this.direction = shootDirection.Normalized();
 		this.shooter = enemy1;
 	}
 
