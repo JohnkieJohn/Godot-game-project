@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba4mgrytyjgwn"]
+
+[ext_resource type="Script" path="res://Scripts/Paths/Path2dBossStage1.cs" id="1_7nebu"]
+[ext_resource type="PackedScene" uid="uid://x2nobyoa1vc3" path="res://Scenes/boss_stage_1.tscn" id="1_8l4js"]
+
+[sub_resource type="Curve2D" id="Curve2D_qrny2"]
+_data = {
+"points": PackedVector2Array(-30.525, 50.224, 30.525, -50.224, 24, 96, -7.49728, -2.65464, 7.49728, 2.65464, 80, 56, -38.5, 1, 38.5, -1, 176, 88, -11.7002, 3.57308, 11.7002, -3.57308, 264, 56, -1.15915, -37.8585, 1.15915, 37.8585, 328, 96, 26.4862, 0.297302, -26.4862, -0.297302, 264, 136, 47, -1, -47, 1, 176, 88, 22.1166, 0, -22.1166, 0, 80, 136, 11.9837, 50.8144, -11.9837, -50.8144, 24, 88)
+}
+point_count = 9
+
+[node name="Path2D" type="Path2D"]
+curve = SubResource("Curve2D_qrny2")
+script = ExtResource("1_7nebu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(24, 96)
+rotates = false
+
+[node name="BossStage1" parent="PathFollow2D" instance=ExtResource("1_8l4js")]
+position = Vector2(64, 40)

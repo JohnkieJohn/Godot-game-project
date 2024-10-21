@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvxkfdumcpppf"]
+
+[ext_resource type="Script" path="res://Scripts/Main.cs" id="1_bwbea"]
+[ext_resource type="PackedScene" uid="uid://dusspyw6llgxl" path="res://Scenes/player.tscn" id="1_eifi1"]
+[ext_resource type="Texture2D" uid="uid://boesvll4e3p5s" path="res://Assets/Sprites/Backgrounds/background_1.png" id="3_7on0p"]
+[ext_resource type="Texture2D" uid="uid://bav757l55eabb" path="res://Assets/Sprites/Backgrounds/background_1_over.png" id="4_6nysb"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_bwbea")
+
+[node name="Player" parent="." instance=ExtResource("1_eifi1")]
+position = Vector2(240, 552)
+
+[node name="Enemy1spawn" type="Timer" parent="."]
+
+[node name="Enemy2spawn" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(0, 640)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(240, 319.612)
+scale = Vector2(0.872727, 0.775758)
+texture = ExtResource("3_7on0p")
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(0, 990)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+position = Vector2(240, 196)
+scale = Vector2(0.666667, 0.69375)
+texture = ExtResource("4_6nysb")

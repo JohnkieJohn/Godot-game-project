@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://02vfdmp60rsc"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy2.cs" id="1_7n4m7"]
+[ext_resource type="Texture2D" uid="uid://gr77pxkcmfhg" path="res://Assets/Sprites/Enemies/Enemy2/enemy2_1-3.png" id="3_2a06o"]
+[ext_resource type="Texture2D" uid="uid://b3v8vc8g78gqf" path="res://Assets/Sprites/Enemies/Enemy2/enemy2_2-3.png" id="4_ahycq"]
+[ext_resource type="Texture2D" uid="uid://bjyxdua322rk7" path="res://Assets/Sprites/Enemies/Enemy2/enemy2_3-3.png" id="5_rgnxq"]
+[ext_resource type="Texture2D" uid="uid://dqa7ni0ugov55" path="res://Assets/Sprites/Enemies/Enemy2/enemy2_hit_sprite.png" id="6_gecit"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lup2v"]
+radius = 18.0278
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ihyqw"]
+radius = 555.008
+
+[sub_resource type="Animation" id="Animation_nf0d3"]
+resource_name = "enemy2"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_2a06o"), ExtResource("4_ahycq"), ExtResource("5_rgnxq")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iay36"]
+_data = {
+"enemy2": SubResource("Animation_nf0d3")
+}
+
+[node name="Enemy2" type="CharacterBody2D" groups=["Enemy"]]
+collision_mask = 2
+script = ExtResource("1_7n4m7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_2a06o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lup2v")
+
+[node name="Detection" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+shape = SubResource("CircleShape2D_ihyqw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_iay36")
+}
+
+[node name="HitSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("6_gecit")
+
+[node name="HitSpriteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true

@@ -1,0 +1,101 @@
+[gd_scene load_steps=5 format=3 uid="uid://rcvtw38nu1j3"]
+
+[ext_resource type="Texture2D" uid="uid://boesvll4e3p5s" path="res://Assets/Sprites/Backgrounds/background_1.png" id="1_01ka8"]
+[ext_resource type="Script" path="res://Scripts/Stages/Stage1.cs" id="1_f3p18"]
+[ext_resource type="Texture2D" uid="uid://bav757l55eabb" path="res://Assets/Sprites/Backgrounds/background_1_over.png" id="2_7jelu"]
+[ext_resource type="PackedScene" uid="uid://dusspyw6llgxl" path="res://Scenes/player.tscn" id="2_82py3"]
+
+[node name="Stage1" type="Node2D"]
+script = ExtResource("1_f3p18")
+
+[node name="Player" parent="." instance=ExtResource("2_82py3")]
+position = Vector2(240, 560)
+
+[node name="Enemy1Cluster" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="Enemy1Cluster"]
+position = Vector2(64, -272)
+
+[node name="Marker2D2" type="Marker2D" parent="Enemy1Cluster"]
+position = Vector2(96, -288)
+
+[node name="Marker2D3" type="Marker2D" parent="Enemy1Cluster"]
+position = Vector2(80, -304)
+
+[node name="Marker2D4" type="Marker2D" parent="Enemy1Cluster"]
+position = Vector2(360, -320)
+
+[node name="Marker2D5" type="Marker2D" parent="Enemy1Cluster"]
+position = Vector2(328, -336)
+
+[node name="Marker2D6" type="Marker2D" parent="Enemy1Cluster"]
+position = Vector2(344, -352)
+
+[node name="Enemy2Cluster1" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(48, -128)
+
+[node name="Marker2D2" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(112, -136)
+
+[node name="Marker2D3" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(176, -144)
+
+[node name="Marker2D4" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(240, -152)
+
+[node name="Marker2D5" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(304, -144)
+
+[node name="Marker2D6" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(368, -136)
+
+[node name="Marker2D7" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(432, -128)
+
+[node name="Marker2D8" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(136, -256)
+
+[node name="Marker2D9" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(240, -256)
+
+[node name="Marker2D10" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(352, -256)
+
+[node name="Marker2D11" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(192, -208)
+
+[node name="Marker2D12" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(288, -208)
+
+[node name="Marker2D13" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(352, -208)
+
+[node name="Marker2D14" type="Marker2D" parent="Enemy2Cluster1"]
+position = Vector2(136, -208)
+
+[node name="BossCluster" type="Node2D" parent="."]
+
+[node name="BossSpawnPos" type="Marker2D" parent="BossCluster"]
+position = Vector2(0, -448)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(0, 640)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(240, 319.612)
+scale = Vector2(0.872727, 0.775758)
+texture = ExtResource("1_01ka8")
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(0, 990)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+position = Vector2(240, 196)
+scale = Vector2(0.666667, 0.69375)
+texture = ExtResource("2_7jelu")

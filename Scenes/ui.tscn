@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdqfyqaj7d3fu"]
+
+[ext_resource type="Script" path="res://Scripts/Ui.cs" id="1_iitav"]
+[ext_resource type="Texture2D" uid="uid://cf68p3ho44sx1" path="res://Assets/Sprites/UI/bar_texture.png" id="2_cpc78"]
+[ext_resource type="Texture2D" uid="uid://4kle5rg00w0v" path="res://Assets/Sprites/UI/progress_texture.png" id="3_i7j2s"]
+[ext_resource type="FontFile" uid="uid://b7kn2vexhwvsm" path="res://Assets/Fonts/Ranyth.ttf" id="4_odfit"]
+
+[node name="Ui" type="Node2D"]
+z_index = 1
+script = ExtResource("1_iitav")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 481.0
+offset_bottom = 641.0
+
+[node name="BulletTimeBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_top = 640.0
+offset_right = 91.0
+offset_bottom = 658.0
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+value = 100.0
+texture_under = ExtResource("2_cpc78")
+texture_progress = ExtResource("3_i7j2s")
+texture_progress_offset = Vector2(4, 4)
+
+[node name="Score" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 178.0
+offset_right = 480.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0.920323, 0.708699, 0.263202, 1)
+theme_override_colors/font_outline_color = Color(0.92, 0.92, 0.92, 1)
+theme_override_fonts/font = ExtResource("4_odfit")
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 2
